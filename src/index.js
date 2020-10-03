@@ -26,8 +26,14 @@ var obj = {
   insert:['matias','matias','email@email.com','asdhjsadhaksjd','201814871','alfredo acevedo 1044','ashdjkashdkasd',1]
 }
 db.insert_procedure(obj)*/
-var obj = {
+/*var obj = {
   tabla:'usuario',
-  update:[{columna:'nombre_columna',value:'valor a updatear'},{columna:'nombre_columna',value:'valor a updatear'}]
-}
-db.update_procedure(obj)
+  id:2,
+  update:[{columna:'nombre',value:'felipito'},{columna:'contrasenia',value:'asdjklasdjklasdjkl'}]
+}*/
+
+/*var obj = {
+  tabla:'usuario',
+  id:23
+}*/
+
