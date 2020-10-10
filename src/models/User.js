@@ -60,3 +60,12 @@ exports.login = async (object) => {
         return {status:2}
     }
 }
+exports.logout = async(token) =>{
+    var tokenn = await db.global_procedure('proce_token',token,0)
+    if(token == 0){
+        return 0
+    }
+    return await db.delete_procedure({tabla:'token',id:tokenn.id_token})
+    .then(response=> 1)
+    .catch(err => 0)
+}
