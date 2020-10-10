@@ -49,7 +49,7 @@ module.exports.UserLogin = (req,res) => {
                 res.statusMessage = 'No se pudo crear la sesion'
                 res.status(401).json('Credenciales incorrectas intentelo de nuevo')
             case 1:
-                res.status(200).json(response.token)
+                res.status(200).send(response.token)
                 break;
             case 2:
                 res.statusMessage = 'Credenciales incorrectas intentelo de nuevo'
