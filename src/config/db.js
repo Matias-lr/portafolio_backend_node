@@ -2,6 +2,25 @@ const oracledb = require("oracledb")
 
 oracledb.autoCommit = true;
 
+const cleanProcess = async() => {
+  let conect;
+  try{
+    conect = await oracledb.getConnection({
+      user:process.env.DB_USR,
+      password: process.env.DB_PW,
+      connectString: process.env.DBC
+    })
+    await conect.execute(
+      `BEGIN
+        test_proceso();
+       END;`);
+  }catch(e){
+    console.log(e)
+  }finally{
+    conect.close()
+  }
+}
+
 exports.select_procedure = async (nombre) =>{
     let conect;
     let string;
@@ -35,12 +54,21 @@ exports.select_procedure = async (nombre) =>{
       console.log(err)
       return err
     }finally{
-      await conect.close()
+      if (conect) {
+        try {
+          console.log('se cierra todo')
+          await conect.close();
+          cleanProcess()
+        } catch (err) {
+          console.error(err);
+        }
+      } 
     }
   }
 
 exports.insert_procedure = async (object) =>{
     let conect;
+    let result;
     try{
         conect = await oracledb.getConnection({
           user:process.env.DB_USR,
@@ -48,7 +76,7 @@ exports.insert_procedure = async (object) =>{
           connectString: process.env.DBC
         })
     const insert = object.insert.map(val => isNaN(val)?`''${val}''`:val).join(',')
-    return await conect.execute(`
+    result = await conect.execute(`
         begin
             insert_global('${object.tabla}','${insert}');
         end;
@@ -58,12 +86,22 @@ exports.insert_procedure = async (object) =>{
       console.log(err)
         return err
     }finally{
-        conect.close()                
+      if (conect) {
+        try {
+          console.log('se cierra todo')
+          await conect.close();
+          cleanProcess()
+        } catch (err) {
+          console.error(err);
+        }
+      }              
     }
+    return result
 }
 
 exports.update_procedure = async (cosa) => {
     let conect;
+    let result;
     try{
         conect = await oracledb.getConnection({
           user:process.env.DB_USR,
@@ -74,7 +112,7 @@ exports.update_procedure = async (cosa) => {
       var value = isNaN(val.value)?`''${val.value}''`:val.value
       return val.columna+' = '+ value
     } ).join(',');
-    return await conect.execute(
+    result = await conect.execute(
       `begin
             update_general('${cosa.tabla}','${update}',${cosa.id});
         end;
@@ -84,18 +122,28 @@ exports.update_procedure = async (cosa) => {
       console.log(err)
         return err
     }finally{
-        conect.close()
+      if (conect) {
+        try {
+          console.log('se cierra todo')
+          await conect.close();
+          cleanProcess()
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
+    return result;
 }
 exports.delete_procedure = async (objeto) =>{
   let conect;
+  let result;
     try{
       conect = await oracledb.getConnection({
         user:process.env.DB_USR,
         password: process.env.DB_PW,
         connectString: process.env.DBC
       })
-    return await conect.execute(
+    result = await conect.execute(
       `begin
             delete_general('${objeto.tabla}','${objeto.id}');
         end;
@@ -105,8 +153,17 @@ exports.delete_procedure = async (objeto) =>{
       console.log(err)
       return err
     }finally{
-      conect.close()
+      if (conect) {
+        try {
+          console.log('se cierra todo')
+          await conect.close();
+          cleanProcess()
+        } catch (err) {
+          console.error(err);
+        }
+      } 
     }
+    return result;
 }
 
 exports.select_raw = async(query) => {
@@ -121,7 +178,15 @@ exports.select_raw = async(query) => {
     console.log(err)
     return err
   }finally{
-    conect.close()
+    if (conect) {
+      try {
+        console.log('se cierra todo')
+        await conect.close();
+        cleanProcess()
+      } catch (err) {
+        console.error(err);
+      }
+    } 
   }
 }
 exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
@@ -130,6 +195,7 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
     password: process.env.DB_PW,
     connectString: process.env.DBC
   })
+  let result;
   if(Array.isArray(inserts)){
     inserts = inserts.map(val => {
       var value = isNaN(val.value)?`''${val.value}''`:val.value
@@ -148,7 +214,6 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
             password: process.env.DB_PW,
             connectString: process.env.DBC
           })
-          console.log(inserts)
           await conect.execute(
             `BEGIN
                DBMS_OUTPUT.ENABLE(NULL);
@@ -168,23 +233,31 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
               string = string + check.outBinds.ln
           } while (check.outBinds.st === 0);
           string = JSON.parse(string.replace('undefined','').replace('null','').replace(',]',']'))
-          return string;
+          result = string;
         break;
       case 1:
-        return await conect.execute(
+        result = await conect.execute(
           `begin
                 ${procedure}('${inserts}');
             end;
           `)
         break;
       default:
-        return 'no existe otro tipo de respuesta'
+        result = 'no existe otro tipo de respuesta'
     }
-      
   }catch(err){
     console.log(err)
     return err
   }finally{
-    conect.close()
+    if (conect) {
+      try {
+        console.log('se cierra todo')
+        await conect.close();
+        cleanProcess()
+      } catch (err) {
+        console.error(err);
+      }
+    }
   }
+  return result;
 }

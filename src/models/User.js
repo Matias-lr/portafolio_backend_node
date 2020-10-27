@@ -62,10 +62,16 @@ exports.login = async (object) => {
 }
 exports.logout = async(token) =>{
     var tokenn = await db.global_procedure('proce_token',token,0)
-    if(token == 0){
+    .then(response => response)
+    .catch(err => console.log(err))
+    console.log('token:',tokenn)
+    if(tokenn == 0){
         return 0
     }
     return await db.delete_procedure({tabla:'token',id:tokenn.id_token})
     .then(response=> 1)
-    .catch(err => 0)
+    .catch(err => {
+        console.log(err)
+        return 0
+    })
 }
