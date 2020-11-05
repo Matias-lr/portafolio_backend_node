@@ -75,3 +75,16 @@ exports.logout = async(token) =>{
         return 0
     })
 }
+exports.getSesions = async(token,user) =>{
+    var tokenn = await db.global_procedure('proce_token',token,0)
+    .then(response => response)
+    .catch(err => console.log(err))
+    console.log('token:',tokenn)
+    if(tokenn == 0){
+        return {status:0}
+    }
+    var tokens = await db.global_procedure('token_id_usu_select',tokenn.idUsuario,0)
+    .then(res => res)
+    .catch(err => err)
+    return {sesions:tokens,status:1}
+}

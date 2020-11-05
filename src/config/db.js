@@ -49,6 +49,7 @@ exports.select_procedure = async (nombre) =>{
           string = string + check.outBinds.ln
       } while (check.outBinds.st === 0);
       string = JSON.parse(string.replace('undefined','').replace('null','').replace(',]',']'))
+      console.log(string)
       return string;
     }catch(err){
       console.log(err)
@@ -76,6 +77,7 @@ exports.insert_procedure = async (object) =>{
           connectString: process.env.DBC
         })
     const insert = object.insert.map(val => isNaN(val)?`''${val}''`:val).join(',')
+    console.log(insert,object.tabla)
     result = await conect.execute(`
         begin
             insert_global('${object.tabla}','${insert}');

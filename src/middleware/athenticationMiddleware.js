@@ -17,3 +17,12 @@ exports.Authenticated = async (req,res,next) =>{
     req.token = token
     next();
 }
+exports.isAdmin = async (req,res,next) =>{
+    var token = req.headers.authorization.split(" ")[1];
+    var payload = jwt.decode(token, process.env.ENCRYPT_PASS_JWT);
+    if(payload.tipoUsuario != 'Administrador'){
+        res.statusMessage = "No tienes permiso para acceder a este recurso"
+        return res.status(403).json("No tienes permiso para acceder a este recurso");
+    }
+    next();
+}

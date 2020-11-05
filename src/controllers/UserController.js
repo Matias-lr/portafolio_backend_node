@@ -1,4 +1,4 @@
-const {create, select, login,logout} = require('../models/User')
+const {create, select, login,logout,getSesions} = require('../models/User')
 const crypto = require('crypto')
 
 module.exports.UserRegister = (req,res) =>{
@@ -75,6 +75,20 @@ exports.UserLogout = (req,res) => {
                 break;
             case 1:
                 res.status(200).json('Se a deslogeado con exito')
+                break;
+        }
+    })
+}
+exports.TokenByUser = (req,res)=>{
+    getSesions(req.token,req.user)
+    .then(response =>{
+        switch(response.status){
+            case 0:
+                res.statusMessage = 'No se a encontrado la sesion'
+                res.status(404).json('No se a encontrado la sesion')
+                break;
+            case 1:
+                res.status(200).json(response.sesions)
                 break;
         }
     })
