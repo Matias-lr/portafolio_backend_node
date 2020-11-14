@@ -1,4 +1,4 @@
-const {create,select,update} = require('../models/Departamento')
+const {create,select,update,selectByEd} = require('../models/Departamento')
 
 exports.DepartamentoSelect = (req,res) =>{
     select()
@@ -62,6 +62,19 @@ exports.DepartamentoUpdate = (req,res) => {
             case 1:
                 res.statusMessage = 'Registro acctualizado con exito!'
                 res.status(200).json('Registro acctualizado con exito!')
+        }
+    })
+}
+exports.DepartamentoByEdificio = (req,res) => {
+    selectByEd(req.params.id)
+    .then(response => {
+        switch (response.status){
+            case 0:
+                res.statusMessage = 'No se pudo realizar la actualizacion'
+                res.status(500).json('No se pudo realizar la actualizacion')
+            case 1:
+                res.statusMessage = 'Registro acctualizado con exito!'
+                res.status(200).json(response.object)
         }
     })
 }

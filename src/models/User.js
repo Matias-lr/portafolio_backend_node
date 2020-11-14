@@ -3,7 +3,7 @@ const {getPropertys,createToken} = require('../helpers')
 
 const table = 'usuario';
 
-const atributes = ['nombre','pass','email','foto','rut','direccion','telefono','tipo_usu']
+const atributes = ['nombre','contrasenia','email','foto','rut','direccion','telefono','fk_id_tipo_usu']
 
 exports.select = async () => {
     return await db.select_procedure(table);

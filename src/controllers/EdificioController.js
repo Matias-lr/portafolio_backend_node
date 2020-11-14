@@ -1,4 +1,4 @@
-const {create,select,update} = require('../models/Edificio')
+const {create,select,update,Delete} = require('../models/Edificio')
 
 exports.EdificioCreate = (req,res) =>{
     if(req.body.length === 0){
@@ -56,8 +56,22 @@ exports.EdificioUpdate = (req,res) => {
                 res.statusMessage = 'No se pudo realizar la actualizacion'
                 res.status(500).json('No se pudo realizar la actualizacion')
             case 1:
-                res.statusMessage = 'Registro acctualizado con exito!'
-                res.status(200).json('Registro acctualizado con exito!')
+                res.statusMessage = 'Registro actualizado con exito!'
+                res.status(200).json('Registro actualizado con exito!')
+        }
+    })
+}
+exports.EdificioDelete = (req,res) =>{
+    var json = {id:req.params.id}
+    Delete(json)
+    .then(response =>{
+        switch (response){
+            case 0:
+                res.statusMessage = 'No se pudo realizar la eliminacion'
+                res.status(500).json('No se pudo realizar la eliminacion')
+            case 1:
+                res.statusMessage = 'Registro eliminado con exito!'
+                res.status(200).json('Registro eliminado con exito!')
         }
     })
 }

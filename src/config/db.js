@@ -168,6 +168,38 @@ exports.delete_procedure = async (objeto) =>{
     return result;
 }
 
+exports.disable_procedure = async (objeto) =>{
+  let conect;
+  let result;
+    try{
+      conect = await oracledb.getConnection({
+        user:process.env.DB_USR,
+        password: process.env.DB_PW,
+        connectString: process.env.DBC
+      })
+    result = await conect.execute(
+      `begin
+        activo_general('${objeto.tabla}','${objeto.id}');
+      end;
+      `)
+    }
+    catch(err){
+      console.log(err)
+      return err
+    }finally{
+      if (conect) {
+        try {
+          console.log('se cierra todo')
+          await conect.close();
+          cleanProcess()
+        } catch (err) {
+          console.error(err);
+        }
+      } 
+    }
+    return result;
+}
+
 exports.select_raw = async(query) => {
   try{
     conect = await oracledb.getConnection({

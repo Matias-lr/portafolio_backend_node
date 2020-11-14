@@ -23,7 +23,7 @@ module.exports.UserRegister = (req,res) =>{
                 break;
             case 3:
                 res.statusMessage = 'email ya existe'
-                res.status(402).json('email ya existe')
+                res.status(408).json('email ya existe')
                 break;
             default:
                 res.statusMessage = 'not found'
