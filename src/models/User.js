@@ -10,10 +10,10 @@ exports.select = async () => {
 }
 exports.create = async (object) =>{
     if(getPropertys(object,atributes)){
-        const {nombre,pass,email,foto,rut,direccion,telefono,tipo_usu} = object
+        const {nombre,contrasenia,email,foto,rut,direccion,telefono,fk_id_tipo_usu} = object
         const insert = {
             tabla:table,
-            insert:[nombre,pass,email,foto,rut,direccion,telefono,tipo_usu]
+            insert:[nombre,contrasenia,email,foto,rut,direccion,telefono,fk_id_tipo_usu]
         }
         var string = await db.global_procedure('proce_email2',email,0)
         .then(res => res)

@@ -9,10 +9,10 @@ exports.select = async() =>{
 }
 exports.create = async(object) => {
     if(getPropertys(object,atributes)){
-        const {nombre,direccion,telefono,foto,id_comuna} = object
+        const {nombre,direccion_edificio,telefono,foto,fk_id_comuna} = object
         const insert = {
             tabla:table,
-            insert:[nombre,direccion,telefono,foto,id_comuna]
+            insert:[nombre,direccion_edificio,telefono,foto,fk_id_comuna]
         }
         console.log(insert)
         return await db.insert_procedure(insert)
