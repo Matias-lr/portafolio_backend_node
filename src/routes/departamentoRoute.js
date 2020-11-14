@@ -4,5 +4,5 @@ const {DepartamentoSelect,DepartamentoCreate,DepartamentoUpdate} = require('../c
 module.exports = (route) => {
     route.get('/departamentos',DepartamentoSelect)
     route.post('/departamento/create',[middleware.Authenticated,middleware.isAdmin],DepartamentoCreate)
-    route.put('/departamento/:id/update',DepartamentoUpdate)
+    route.put('/departamento/:id/update',[middleware.Authenticated,middleware.isAdmin],DepartamentoUpdate)
 }
