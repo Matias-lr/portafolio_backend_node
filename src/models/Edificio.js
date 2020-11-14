@@ -22,3 +22,9 @@ exports.create = async(object) => {
         return 2
     }
 }
+exports.update = async(object) => {
+    object.tabla = table
+    return await db.update_procedure(object)
+    .then(res => 1)
+    .catch(err => 0)
+}
