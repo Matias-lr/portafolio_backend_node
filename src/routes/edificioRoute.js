@@ -6,5 +6,5 @@ module.exports = (route) => {
     route.get('/edificios',EdificioSelect)
     route.post('/edificio/create',[middleware.Authenticated,middleware.isAdmin],EdificioCreate)
     route.put('/edificio/:id/update',[middleware.Authenticated,middleware.isAdmin],EdificioUpdate)
-    route.delete('/edificio/:id/delete',EdificioDelete)
+    route.delete('/edificio/:id/delete',[middleware.Authenticated,middleware.isAdmin],EdificioDelete)
 }

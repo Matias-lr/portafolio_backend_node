@@ -33,3 +33,9 @@ exports.selectByEd = async(id) => {
     .then(res => {return {status:1,object:res}})
     .catch(err => {return {status:0}})
 }
+exports.Delete = async(object) => {
+    object.tabla = table
+    return await db.disable_procedure(object)
+    .then(res => 1)
+    .catch(err => 0)
+}

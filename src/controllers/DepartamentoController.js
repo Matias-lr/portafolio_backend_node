@@ -1,4 +1,4 @@
-const {create,select,update,selectByEd} = require('../models/Departamento')
+const {create,select,update,selectByEd,Delete} = require('../models/Departamento')
 
 exports.DepartamentoSelect = (req,res) =>{
     select()
@@ -75,6 +75,20 @@ exports.DepartamentoByEdificio = (req,res) => {
             case 1:
                 res.statusMessage = 'Registro acctualizado con exito!'
                 res.status(200).json(response.object)
+        }
+    })
+}
+exports.DepartamentoDelete = (req,res) =>{
+    var json = {id:req.params.id}
+    Delete(json)
+    .then(response =>{
+        switch (response){
+            case 0:
+                res.statusMessage = 'No se pudo realizar la eliminacion'
+                res.status(500).json('No se pudo realizar la eliminacion')
+            case 1:
+                res.statusMessage = 'Registro eliminado con exito!'
+                res.status(200).json('Registro eliminado con exito!')
         }
     })
 }
