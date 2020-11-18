@@ -6,7 +6,7 @@ module.exports.UserRegister = (req,res) =>{
         res.statusMessage = "body vacio crack"
         res.status(400).end()
       }
-    req.body.pass = crypto.createHmac('md5', process.env.ENCRYPTPASS).update(req.body.pass).digest().toString('base64');
+    req.body.contrasenia = crypto.createHmac('md5', process.env.ENCRYPTPASS).update(req.body.contrasenia).digest().toString('base64');
     create(req.body)
     .then(response => {
         switch (response){
