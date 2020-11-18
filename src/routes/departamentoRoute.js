@@ -3,8 +3,8 @@ const {DepartamentoSelect,DepartamentoCreate,DepartamentoUpdate,DepartamentoByEd
 
 module.exports = (route) => {
     route.get('/departamentos',DepartamentoSelect)
+    route.get('/departamentoByEdificio/:id',DepartamentoByEdificio)
     route.post('/departamento/create',[middleware.Authenticated,middleware.isAdmin],DepartamentoCreate)
     route.put('/departamento/:id/update',[middleware.Authenticated,middleware.isAdmin],DepartamentoUpdate)
-    route.get('/departamentoByEdificio/:id',DepartamentoByEdificio)
     route.delete('/departamento/:id/delete',[middleware.Authenticated,middleware.isAdmin],DepartamentoDelete)
 }
