@@ -54,7 +54,7 @@ exports.login = async (object) => {
                 return {status:2};
             }
         }else{
-            return {status:2};
+            return {status:3};
         }
     }else{
         return {status:2}

@@ -34,3 +34,8 @@ exports.Delete = async(object) => {
     .then(res => 1)
     .catch(err => 0)
 }
+exports.edificioByNombre = async(nombre) => {
+    return await db.global_procedure('edificio_nombre_select',nombre,0)
+    .then(res => {return {status:1,object:res}})
+    .catch(res => {return {status:0}})
+}

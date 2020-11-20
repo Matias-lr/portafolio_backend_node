@@ -1,4 +1,4 @@
-const {create,select,update,selectByEd,Delete} = require('../models/Departamento')
+const {create,select,update,selectByEd,Delete,depaByNumName} = require('../models/Departamento')
 
 exports.DepartamentoSelect = (req,res) =>{
     select()
@@ -59,9 +59,11 @@ exports.DepartamentoUpdate = (req,res) => {
             case 0:
                 res.statusMessage = 'No se pudo realizar la actualizacion'
                 res.status(500).json('No se pudo realizar la actualizacion')
+                break;
             case 1:
                 res.statusMessage = 'Registro acctualizado con exito!'
                 res.status(200).json('Registro acctualizado con exito!')
+                break;
         }
     })
 }
@@ -72,9 +74,11 @@ exports.DepartamentoByEdificio = (req,res) => {
             case 0:
                 res.statusMessage = 'No se pudo realizar la actualizacion'
                 res.status(500).json('No se pudo realizar la actualizacion')
+                break;
             case 1:
                 res.statusMessage = 'Registro acctualizado con exito!'
                 res.status(200).json(response.object)
+                break;
         }
     })
 }
@@ -86,9 +90,29 @@ exports.DepartamentoDelete = (req,res) =>{
             case 0:
                 res.statusMessage = 'No se pudo realizar la eliminacion'
                 res.status(500).json('No se pudo realizar la eliminacion')
+                break;
             case 1:
                 res.statusMessage = 'Registro eliminado con exito!'
                 res.status(200).json('Registro eliminado con exito!')
+                break;
+        }
+    })
+}
+exports.DepaByNameId = (req,res) => {
+    var num = req.params.numDepa;
+    var nom = req.params.nomEdi;
+    depaByNumName(nom,num)
+    .then(response => {
+        switch (response.status){
+            case 0:
+                res.statusMessage = 'No se encontro el objeto'
+                res.status(500).json('No se encontro el objeto')
+                break;
+            case 1:
+                res.status(200).json(response.object)
+                break;
+            default:
+                break;
         }
     })
 }

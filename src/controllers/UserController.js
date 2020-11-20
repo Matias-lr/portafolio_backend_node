@@ -54,6 +54,9 @@ module.exports.UserLogin = (req,res) => {
             case 2:
                 res.statusMessage = 'Credenciales incorrectas intentelo de nuevo'
                 res.status(402).json('Credenciales incorrectas intentelo de nuevo')
+            case 3:
+                res.statusMessage = 'Usuario no encontrado'
+                res.status(410).json('Usuario no encontrado')
                 break;
             default:
                 res.statusMessage = 'No se encontro error'

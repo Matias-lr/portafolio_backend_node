@@ -232,8 +232,8 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
   let result;
   if(Array.isArray(inserts)){
     inserts = inserts.map(val => {
-      var value = isNaN(val.value)?`''${val.value}''`:val.value
-      return val.columna+' = '+ value
+      var value = isNaN(val)?`'${val}'`:val
+      return value
     }).join(',');
     procedureString = `${procedure}(${inserts});`
   }else{
@@ -252,6 +252,7 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
             `BEGIN
                DBMS_OUTPUT.ENABLE(NULL);
              END;`);
+          console.log(procedureString)
           await conect.execute(`BEGIN
             ${procedureString}
           END;`)

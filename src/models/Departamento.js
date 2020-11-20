@@ -39,3 +39,10 @@ exports.Delete = async(object) => {
     .then(res => 1)
     .catch(err => 0)
 }
+exports.depaByNumName = async(nomEdi,NumDepa) => {
+    var insert = [NumDepa,nomEdi];
+    console.log(insert)
+    return await db.global_procedure('depa_numero_edificio_select',insert,0)
+    .then(res => {return {status:1,object:res}})
+    .catch(res => {return {status:0}})
+}

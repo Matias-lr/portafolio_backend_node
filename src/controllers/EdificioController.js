@@ -1,4 +1,4 @@
-const {create,select,update,Delete} = require('../models/Edificio')
+const {create,select,update,Delete,edificioByNombre} = require('../models/Edificio')
 
 exports.EdificioCreate = (req,res) =>{
     if(req.body.length === 0){
@@ -72,6 +72,22 @@ exports.EdificioDelete = (req,res) =>{
             case 1:
                 res.statusMessage = 'Registro eliminado con exito!'
                 res.status(200).json('Registro eliminado con exito!')
+        }
+    })
+}
+exports.EdificioByNombre = (req,res) =>{
+    edificioByNombre(req.params.nombreEdi)
+    .then(response => {
+        switch (response.status){
+            case 0:
+                res.statusMessage = 'No se encontro el objeto'
+                res.status(500).json('No se encontro el objeto')
+                break;
+            case 1:
+                res.status(200).json(response.object)
+                break;
+            default:
+                break;
         }
     })
 }
