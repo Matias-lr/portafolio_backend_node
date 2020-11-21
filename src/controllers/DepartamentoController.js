@@ -1,4 +1,4 @@
-const {create,select,update,selectByEd,Delete,depaByNumName} = require('../models/Departamento')
+const {create,select,update,selectByEd,Delete,depaByNumName,depaById} = require('../models/Departamento')
 
 exports.DepartamentoSelect = (req,res) =>{
     select()
@@ -102,6 +102,23 @@ exports.DepaByNameId = (req,res) => {
     var num = req.params.numDepa;
     var nom = req.params.nomEdi;
     depaByNumName(nom,num)
+    .then(response => {
+        switch (response.status){
+            case 0:
+                res.statusMessage = 'No se encontro el objeto'
+                res.status(500).json('No se encontro el objeto')
+                break;
+            case 1:
+                res.status(200).json(response.object)
+                break;
+            default:
+                break;
+        }
+    })
+}
+exports.DepaId = (req,res) => {
+    var id = req.params.id;
+    depaById(id)
     .then(response => {
         switch (response.status){
             case 0:

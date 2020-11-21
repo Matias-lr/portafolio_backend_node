@@ -46,3 +46,8 @@ exports.depaByNumName = async(nomEdi,NumDepa) => {
     .then(res => {return {status:1,object:res}})
     .catch(res => {return {status:0}})
 }
+exports.depaById = async(id) => {
+    return await db.global_procedure('departamento_estado_select',id,0)
+    .then(res => {return {status:1,object:res}})
+    .catch(res => {return {status:0}})
+}
