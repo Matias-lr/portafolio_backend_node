@@ -10,8 +10,8 @@ exports.select = async() =>{
     var edificios = await db.select_procedure(table)
     const all = await Promise.all(edificios.map(async(val) =>{
         let areaEdi = await db.global_procedure('area_edi_id_select',val.id,0)
-        let impleEdi = await db.global_procedure('imple_depa_id_select',val.id,0)
-        const value = await {...val,implementos:impleEdi,areas:areaEdi}
+        let servEdi = await db.global_procedure('edi_area_servi',val.id,0)
+        const value = await {...val,implementos:servEdi,areas:areaEdi}
         return value
     }))
     return all
