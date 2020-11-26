@@ -9,6 +9,7 @@ const config = require('./config/cors')
 const port = process.env.PORT
 
 server.use(cors(config.application.cors.server))
+server.use('/images',express.static('images'))
 
 server.use(express.json())
 server.use(express.urlencoded({extended:false}))

@@ -1,5 +1,7 @@
 const db = require('../config/db')
 const {getPropertys,createToken} = require('../helpers')
+const fs = require('fs');
+const moment = require('moment');
 const table = 'departamento';
 
 const atributes = ['numero_habitacion','numero_habitaciones','metros_cuadrados','banios','piso','precio_noche','foto','fk_id_edificio','fk_id_estado']
@@ -14,7 +16,6 @@ exports.create = async(object) => {
             tabla:table,
             insert:[numero_habitacion,numero_habitaciones,metros_cuadrados,banios,piso,precio_noche,foto,fk_id_edificio,fk_id_estado]
         }
-        console.log(insert)
         return await db.insert_procedure(insert)
         .then(res => 1)
         .catch(err => 0)
