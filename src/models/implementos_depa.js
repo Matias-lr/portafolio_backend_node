@@ -1,31 +1,22 @@
 const db = require('../config/db');
 const {getPropertys} = require('../helpers')
-const fs = require('fs-extra');
-const moment = require('moment');
 
-const table = 'guia_turistico';
+const table = 'implementos_departamento';
 
-const atributes = ['nombre','rut','telefono','foto'];
+const atributes = ['nombre_implemento','valor_implemento'];
 
 exports.select = async() =>{
     return await db.select_procedure(table)
 }
 exports.create = async(object) =>{
     if(getPropertys(object,atributes)){
-        const {nombre,rut,telefono,foto} = object
-        const time = moment().format("YYYYMMDDHHmmss")
-        const path = `images/guia/${nombre}/principal.jpg`;
+        const {nombre_implemento,valor_implemento} = object
         const insert = {
             tabla:table,
-            insert:[nombre,rut,telefono,path]
+            insert:[nombre_implemento,valor_implemento]
         }
         return await db.insert_procedure(insert)
-        .then(res => {
-            fs.outputFile(path, foto, 'base64', function(err) {
-                console.log(err);
-              });
-            return 1
-        })
+        .then(res => 1)
         .catch(err => 0)
     }else{
         return 2

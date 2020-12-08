@@ -6,5 +6,6 @@ require('./edificioRoute')(router)
 require('./departamentoRoute')(router)
 require('./comboboxRoute')(router)
 require('./serviciosDepaRoute')(router)
+require('./ImplementosRoute')(router)
 
 module.exports = router
