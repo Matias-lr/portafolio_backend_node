@@ -1,4 +1,4 @@
-const {create} = require('../models/implementos_depa')
+const {create,select} = require('../models/implementos_depa')
 
 exports.ImplementoDepaCreate = (req,res) =>{
     if(req.body.length === 0){
@@ -28,12 +28,7 @@ exports.ImplementoDepaCreate = (req,res) =>{
     })
     .catch(err => console.log(err))
 }
-/*exports.EdificioSelect = (req,res) =>{
-    select()
-    .then(response =>{
-        res.status(200).json(response)
-    })
-}
+/*
 exports.EdificioUpdate = (req,res) => {
     if(req.body.length === 0){
         res.statusMessage = "body vacio crack"
