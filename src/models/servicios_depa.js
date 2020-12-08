@@ -8,7 +8,7 @@ const atributes = ['nombre','descripcion'];
 exports.select = async() =>{
     return await db.select_procedure(table)
 }
-exports.create = async() =>{
+exports.create = async(object) =>{
     if(getPropertys(object,atributes)){
         const {nombre,descripcion} = object
         const insert = {

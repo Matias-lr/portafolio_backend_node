@@ -1,5 +1,7 @@
 const db = require('../config/db')
 const {getPropertys,createToken} = require('../helpers')
+const fs = require('fs-extra');
+const moment = require('moment');
 
 const table = 'usuario';
 
@@ -11,16 +13,23 @@ exports.select = async () => {
 exports.create = async (object) =>{
     if(getPropertys(object,atributes)){
         const {nombre,contrasenia,email,foto,rut,direccion,telefono,fk_id_tipo_usu} = object
+        const time = moment().format("YYYYMMDDHHmmss")
+        const path = `images/usuario/${nombre}/principal.jpg`;
         const insert = {
             tabla:table,
-            insert:[nombre,contrasenia,email,foto,rut,direccion,telefono,fk_id_tipo_usu]
+            insert:[nombre,contrasenia,email,path,rut,direccion,telefono,fk_id_tipo_usu]
         }
         var string = await db.global_procedure('proce_email2',email,0)
         .then(res => res)
         .catch(err => console.log(res))
         if(string == 0){
             return await db.insert_procedure(insert)
-            .then(res => {return 1})
+            .then(res => {
+                fs.outputFile(path, foto, 'base64', function(err) {
+                    console.log(err);
+                  });
+                return 1
+            })
             .catch(err => {return 0})
         }else{
             return 3
