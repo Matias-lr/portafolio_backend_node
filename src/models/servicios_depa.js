@@ -1,29 +1,22 @@
 const db = require('../config/db');
 const {getPropertys} = require('../helpers')
 
-const table = 'chofer';
+const table = 'servicios_depa';
 
-const atributes = ['nombre','rut','telefono','foto']
+const atributes = ['nombre','descripcion'];
 
 exports.select = async() =>{
     return await db.select_procedure(table)
 }
 exports.create = async() =>{
     if(getPropertys(object,atributes)){
-        const {nombre,rut,telefono,foto} = object
-        const time = moment().format("YYYYMMDDHHmmss")
-        const path = `images/guia/${nombre}/principal.jpg`;
+        const {nombre,descripcion} = object
         const insert = {
             tabla:table,
-            insert:[nombre,rut,telefono,path]
+            insert:[nombre,descripcion]
         }
         return await db.insert_procedure(insert)
-        .then(res => {
-            fs.outputFile(path, foto, 'base64', function(err) {
-                console.log(err);
-              });
-            return 1
-        })
+        .then(res => 1)
         .catch(err => 0)
     }else{
         return 2

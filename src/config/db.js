@@ -59,7 +59,7 @@ exports.select_procedure = async (nombre) =>{
         try {
           console.log('se cierra todo')
           await conect.close();
-          //cleanProcess()
+          cleanProcess()
         } catch (err) {
           console.error(err);
         }
@@ -92,7 +92,7 @@ exports.insert_procedure = async (object) =>{
         try {
           console.log('se cierra todo')
           await conect.close();
-          //cleanProcess()
+          cleanProcess()
         } catch (err) {
           console.error(err);
         }
@@ -128,7 +128,7 @@ exports.update_procedure = async (cosa) => {
         try {
           console.log('se cierra todo')
           await conect.close();
-          //cleanProcess()
+          cleanProcess()
         } catch (err) {
           console.error(err);
         }
@@ -159,7 +159,7 @@ exports.delete_procedure = async (objeto) =>{
         try {
           console.log('se cierra todo')
           await conect.close();
-          //cleanProcess()
+          cleanProcess()
         } catch (err) {
           console.error(err);
         }
@@ -191,7 +191,7 @@ exports.disable_procedure = async (objeto) =>{
         try {
           console.log('se cierra todo')
           await conect.close();
-          //cleanProcess()
+          cleanProcess()
         } catch (err) {
           console.error(err);
         }
@@ -216,7 +216,7 @@ exports.select_raw = async(query) => {
       try {
         console.log('se cierra todo')
         await conect.close();
-        //cleanProcess()
+        cleanProcess()
       } catch (err) {
         console.error(err);
       }
@@ -288,7 +288,7 @@ exports.global_procedure = async (procedure,inserts,resopnse_json) =>{
       try {
         console.log('se cierra todo')
         await conect.close();
-        //cleanProcess()
+        cleanProcess()
       } catch (err) {
         console.error(err);
       }

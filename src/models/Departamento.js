@@ -1,6 +1,6 @@
 const db = require('../config/db')
 const {getPropertys,createToken} = require('../helpers')
-const fs = require('fs');
+const fs = require('fs-extra');
 const moment = require('moment');
 const table = 'departamento';
 
@@ -12,12 +12,19 @@ exports.select = async() =>{
 exports.create = async(object) => {
     if(getPropertys(object,atributes)){
         const {numero_habitacion,numero_habitaciones,metros_cuadrados,banios,piso,precio_noche,foto,fk_id_edificio,fk_id_estado} = object
+        const time = moment().format("YYYYMMDDHHmmss")
+        const path = `images/edificio/${nombre}/principal.jpg`;
         const insert = {
             tabla:table,
             insert:[numero_habitacion,numero_habitaciones,metros_cuadrados,banios,piso,precio_noche,foto,fk_id_edificio,fk_id_estado]
         }
         return await db.insert_procedure(insert)
-        .then(res => 1)
+        .then(res => {
+            fs.outputFile(path, foto, 'base64', function(err) {
+                console.log(err);
+              });
+            return 1
+        })
         .catch(err => 0)
     }else{
         return 2
