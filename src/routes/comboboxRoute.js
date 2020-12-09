@@ -43,7 +43,8 @@ module.exports = (route) =>{
             json.rows.map(val => {
                 var aux = {
                     id:val[0],
-                    nombre_region:val[1],
+                    implemento:val[1],
+                    valorImplemento:val[2]
                 }
                 jsons.push(aux)
             })
@@ -61,6 +62,24 @@ module.exports = (route) =>{
                 var aux = {
                     id:val[0],
                     nombre_region:val[1],
+                    descripcion:val[2]
+                }
+                jsons.push(aux)
+            })
+            res.status(200).json(jsons)
+        })
+        .catch(err =>{
+            res.status('400')
+        })
+    })
+    route.get('/combo/areaedificio',async (req,res) =>{
+        await db.select_raw('select * from area_edificio')
+        .then(json =>{
+            var jsons = []
+            json.rows.map(val => {
+                var aux = {
+                    id:val[0],
+                    nombre_area:val[1],
                 }
                 jsons.push(aux)
             })

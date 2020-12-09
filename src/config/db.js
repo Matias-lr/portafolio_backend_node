@@ -76,7 +76,7 @@ exports.insert_procedure = async (object) =>{
           password: process.env.DB_PW,
           connectString: process.env.DBC
         })
-    const insert = object.insert.map(val => isNaN(val)?`''${val}''`:val).join(',')
+    const insert = object.insert.map(val => isNaN(val)?`''${val}''`:val == null? 'null':val).join(',')
     console.log(insert,object.tabla)
     result = await conect.execute(`
         begin
