@@ -28,3 +28,9 @@ exports.ArriendoCreate = (req,res) =>{
     })
     .catch(err => console.log(err))
 }
+exports.ArriendoSelect = (req,res) =>{
+    select()
+    .then(response =>{
+        res.status(200).json(response)
+    })
+}

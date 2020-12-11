@@ -34,3 +34,8 @@ exports.Delete = async(object) => {
     .then(res => 1)
     .catch(err => 0)
 }
+exports.ImplementosByDepa = async(id) =>{
+    return await db.global_procedure('imple_depa_id_select',id,0)
+    .then(res => {return {status:1,object:res}})
+    .catch(res => {return {status:0}})
+}

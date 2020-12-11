@@ -1,4 +1,4 @@
-const {create,select} = require('../models/implementos_depa')
+const {create,select,ImplementosByDepa} = require('../models/implementos_depa')
 
 exports.ImplementoDepaCreate = (req,res) =>{
     if(req.body.length === 0){
@@ -27,6 +27,24 @@ exports.ImplementoDepaCreate = (req,res) =>{
         }
     })
     .catch(err => console.log(err))
+}
+exports.ImplementosDepa = (req,res) =>{
+    ImplementosByDepa(req.params.id)
+    .then(response => {
+        switch(response.status){
+            case 0:
+                res.statusMessage = 'Recopilar la informacion'
+                res.status(401).json('Recopilar la informacion')
+                break;
+            case 1:
+                res.status(200).json(response.object)
+                break;
+            default:
+                res.statusMessage = 'no se ha podido insertar'
+                res.status(404).json('no se ha podido insertar')
+                break;
+        }
+    })
 }
 /*
 exports.EdificioUpdate = (req,res) => {

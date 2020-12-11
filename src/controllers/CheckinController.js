@@ -1,4 +1,4 @@
-const {create} = require('../models/CheckIn')
+const {create,select} = require('../models/CheckIn')
 
 exports.CheckInCreate = (req,res) =>{
     if(req.body.length === 0){

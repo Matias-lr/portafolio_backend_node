@@ -16,3 +16,6 @@ exports.create = async(objeto) =>{
         return 2
     }
 }
+exports.select = async(id) =>{
+
+}
